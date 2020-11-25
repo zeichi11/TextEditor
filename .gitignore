@@ -7,4 +7,7 @@ package-lock.json
 *.iml
 
 # etc
+public/
 public/bundle.js
+routes/
+views/
