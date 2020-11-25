@@ -1,0 +1,10 @@
+# Dependency directories & files
+node_modules/
+package-lock.json
+
+# IDEA
+.idea/
+*.iml
+
+# etc
+public/bundle.js
