@@ -33,19 +33,19 @@ class TextEditor {
 	/**
 	 * open
 	 * @param {object} docJson
-	 * @param {object} textRect
+	 * @param {object} rectInfo
 	 * @param {Array} classList
 	 * @param {object} marginInfo
 	 * @param {boolean} hide
 	 * @private
 	 */
-	open(docJson, textRect, classList, marginInfo, hide) {
+	open(docJson, rectInfo, classList, marginInfo, hide) {
 		if (!docJson) {
 			console.error(MESSAGE.error.openErrorEmptyDocJson);
 		}
 
-		if (textRect) {
-			this._docModel.setModel(docJson);
+		if (rectInfo) {
+			this._docModel.setModel(docJson, rectInfo);
 		}
 	}
 

@@ -28,9 +28,10 @@ const Document = function () {
 	/**
 	 * set model(private)
 	 * @param {object} docJson
+	 * @param {object} rectInfo
 	 * @private
 	 */
-	function _setModel(docJson) {
+	function _setModel(docJson, rectInfo) {
 		_body = new Body(docJson);
 		_notifyObservers(DOC_EVENT.OPEN, _body);
 	}
@@ -38,10 +39,11 @@ const Document = function () {
 	return {
 		/**
 		 * set model(public)
-		 * @param docJson
+		 * @param {object} docJson
+		 * @param {object} rectInfo
 		 */
-		setModel: function (docJson) {
-			_setModel(docJson);
+		setModel: function (docJson, rectInfo) {
+			_setModel(docJson, rectInfo);
 		},
 
 		/**

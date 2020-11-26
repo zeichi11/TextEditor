@@ -13,14 +13,14 @@ let EditorAPI = (() => {
 		/**
 		 * textEditor를 open 한다.
 		 * @param {string} contents
-		 * @param {object} textRect
+		 * @param {object} rectInfo
 		 * @param {Array} classList
 		 * @param {object} marginInfo
 		 * @param {boolean} hide
 		 * @private
 		 */
-		open: function (contents, textRect, classList, marginInfo, hide) {
-			_textEditor.open(contents, textRect, classList, marginInfo, hide);
+		open: function (contents, rectInfo, classList, marginInfo, hide) {
+			_textEditor.open(contents, rectInfo, classList, marginInfo, hide);
 		},
 
 		/**
