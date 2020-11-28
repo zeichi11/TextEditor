@@ -1,5 +1,5 @@
-import CommandFactory from 'CommandFactory';
-import UndoRedo from 'UndoRedo';
+import CommandFactory from './CommandFactory';
+import UndoRedo from './UndoRedo';
 
 class CommandExecutor {
 	/**
