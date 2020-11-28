@@ -1,7 +1,7 @@
-import AbstractForamat from '../AbstractForamat';
+import AbstractFormat from '../AbstractFormat';
 import { CMD_TYPE } from "../../../common/Constants";
 
-class Anchor extends AbstractForamat{
+class Anchor extends AbstractFormat {
 	/**
 	 * constructor
 	 */
@@ -15,16 +15,16 @@ class Anchor extends AbstractForamat{
 	 * @param {object} value
 	 * @returns {{verticalAlign: string}}
 	 */
-	getStyleInfo = value => ({"verticalAlign": String(value)});
+	getStyleInfo(value) { return {"verticalAlign": String(value)} };
 
 	/**
 	 * Execute command.
 	 * @override
 	 * @param {object} value
 	 */
-	execute = value => {
+	execute(value) {
 		this.apply(CMD_TYPE.ANCHOR, this.getStyleInfo(value));
-	};
+	}
 }
 
 export default Anchor;

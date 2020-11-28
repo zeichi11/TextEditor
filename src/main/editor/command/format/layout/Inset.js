@@ -1,7 +1,7 @@
-import AbstractForamat from '../AbstractForamat';
+import AbstractFormat from '../AbstractFormat';
 import { CMD_TYPE, CONSTANTS } from '../../../common/Constants';
 
-class Inset extends AbstractForamat{
+class Inset extends AbstractFormat {
 	/**
 	 * constructor
 	 */
@@ -50,9 +50,9 @@ class Inset extends AbstractForamat{
 	 * @override
 	 * @param {object} value
 	 */
-	execute = value => {
+	execute(value) {
 		this.apply(CMD_TYPE.INSET, this.getStyleInfo(value));
-	};
+	}
 }
 
 export default Inset;

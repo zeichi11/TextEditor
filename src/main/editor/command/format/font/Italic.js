@@ -1,7 +1,7 @@
-import AbstractForamat from '../AbstractForamat';
+import AbstractFormat from '../AbstractFormat';
 import { CMD_TYPE } from "../../../common/Constants";
 
-class Italic extends AbstractForamat{
+class Italic extends AbstractFormat {
 	/**
 	 * constructor
 	 */
@@ -24,7 +24,7 @@ class Italic extends AbstractForamat{
 	 * @override
 	 * @param {object} value
 	 */
-	execute = value => {
+	execute(value) {
 		this.apply(CMD_TYPE.ITALIC, this.getStyleInfo(value));
 	}
 }

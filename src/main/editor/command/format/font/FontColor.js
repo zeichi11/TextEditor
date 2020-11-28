@@ -1,7 +1,7 @@
-import AbstractForamat from '../AbstractForamat';
+import AbstractFormat from '../AbstractFormat';
 import { CMD_TYPE } from "../../../common/Constants";
 
-class FontColor extends AbstractForamat{
+class FontColor extends AbstractFormat {
 	/**
 	 * constructor
 	 */
@@ -24,7 +24,7 @@ class FontColor extends AbstractForamat{
 	 * @override
 	 * @param {object} value
 	 */
-	execute = value => {
+	execute(value) {
 		this.apply(CMD_TYPE.FONT_COLOR, this.getStyleInfo(value));
 	}
 }

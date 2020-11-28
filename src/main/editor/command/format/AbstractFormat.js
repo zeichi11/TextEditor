@@ -1,8 +1,8 @@
 import Document from '../../model/Document';
 
-class AbstractForamat {
+class AbstractFormat {
 	constructor() {
-		if (new.target === AbstractForamat) {
+		if (new.target === AbstractFormat) {
 			throw new Error("Cannot construct Abstract instances directly.");
 		}
 
@@ -31,7 +31,7 @@ class AbstractForamat {
 	 * @param {string} type
 	 * @param {object} styleInfo
 	 */
-	apply = (type, styleInfo) => { Document.notify(type, styleInfo); };
+	apply(type, styleInfo) { Document.notify(type, styleInfo); };
 }
 
-export default AbstractForamat;
+export default AbstractFormat;

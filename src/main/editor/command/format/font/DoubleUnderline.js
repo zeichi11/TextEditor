@@ -1,7 +1,7 @@
-import AbstractForamat from '../AbstractForamat';
+import AbstractFormat from '../AbstractFormat';
 import { CMD_TYPE } from "../../../common/Constants";
 
-class DoubleUnderline extends AbstractForamat{
+class DoubleUnderline extends AbstractFormat {
 	/**
 	 * constructor
 	 */
@@ -27,7 +27,7 @@ class DoubleUnderline extends AbstractForamat{
 	 * @override
 	 * @param {object} value
 	 */
-	execute = value => {
+	execute(value) {
 		this.apply(CMD_TYPE.DOUBLE_UNDERLINE, this.getStyleInfo(value));
 	}
 }

@@ -1,7 +1,7 @@
-import AbstractForamat from '../AbstractForamat';
+import AbstractFormat from '../AbstractFormat';
 import {CMD_TYPE} from "../../../common/Constants";
 
-class Align extends AbstractForamat{
+class Align extends AbstractFormat {
 	/**
 	 * constructor
 	 */
@@ -15,16 +15,16 @@ class Align extends AbstractForamat{
 	 * @param {object} value
 	 * @returns {{textAlign: string}}
 	 */
-	getStyleInfo = value => ({"textAlign": String(value)});
+	getStyleInfo(value) { return {"textAlign": String(value)} };
 
 	/**
 	 * Execute command.
 	 * @override
 	 * @param {object} value
 	 */
-	execute = value => {
+	execute(value) {
 		this.apply(CMD_TYPE.ALIGN, this.getStyleInfo(value));
-	};
+	}
 }
 
 export default Align;
