@@ -31,7 +31,7 @@ class AbstractFormat {
 	 * @param {string} type
 	 * @param {object} styleInfo
 	 */
-	apply(type, styleInfo) { Document.notify(type, styleInfo); };
+	apply(type, styleInfo) { Document.publish(type, styleInfo); };
 }
 
 export default AbstractFormat;
