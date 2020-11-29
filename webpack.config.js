@@ -1,13 +1,20 @@
-const CommonConfig = require('./webpack/webpack.common.js');
+const CommonConfig = require('./webpack.common.js');
 const { merge } = require('webpack-merge');
 const yargs = require("yargs");
 
 module.exports = () => {
 	const argv = yargs.argv;
-	const envConfig = require(`./webpack/webpack.${argv.env}.js`);
+	const envConfig = require(`./webpack.${argv.env}.js`);
 	// const envConfig = require(`webpack/webpack.dev.js`);
 
-	return merge(CommonConfig, envConfig);
+console.log(argv.env);
+console.log(envConfig);
+
+
+const a = merge(envConfig, CommonConfig);
+console.log(a);
+
+	return a;
 };
 
 // const path = require('path');

@@ -12,10 +12,15 @@ module.exports = {
 				test: /\.js?$/,
 				loader: 'babel-loader',
 				exclude: /node_modules/,
-				include: path.resolve(__dirname, 'src'),
+				include: path.resolve(__dirname, 'src/main'),
 				query: {
 					cacheDirectory: true,
-					presets: ['env']
+					presets: [
+						'@babel/env'
+					]
+					// presets: [
+					// 	'@babel/preset-env'
+					// ]
 				}
 			}
 		]
