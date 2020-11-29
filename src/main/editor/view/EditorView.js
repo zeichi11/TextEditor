@@ -1,34 +1,34 @@
 import {NAMES, DOC_EVENT, CONSTANTS, CMD_TYPE} from '../common/Constants';
-import TextRenderer from 'renderer/TextRenderer';
+import TextRenderer from './renderer/TextRenderer';
+import Config from '../common/Config';
 import Utils from '../common/Utils';
+import EditorEventPublisher from '../EditorEventPublisher';
 
 class EditorView {
 	/**
 	 * constructor
-	 * @param {Element} container
-	 * @param {object} docModel
+	 * @param {Element} containerEl
 	 */
-	constructor(container, docModel) {
-		this._editorWrap = document.createElement('DIV');
-		this._editorWrap.classList.add(NAMES.editorWrap);
+	constructor(containerEl) {
+		this._editorWrapEl = document.createElement('DIV');
+		this._editorWrapEl.classList.add(NAMES.editorWrap);
 
-		this._editor = document.createElement('DIV');
-		this._editor.setAttribute('contentEditorble', 'true');
-		this._editor.setAttribute('spellcheck', false);
+		this._editorEl = document.createElement('DIV');
+		this._editorEl.setAttribute('contentEditorble', 'true');
+		this._editorEl.setAttribute('spellcheck', false);
 
-		this._editorWrap.appendChild(this._editor);
+		this._editorWrapEl.appendChild(this._editorEl);
 
 		try {
-			container.appendChild(this._editorWrap);
+			containerEl.appendChild(this._editorWrapEl);
 
 		} catch (exception){
 			throw exception;
 		}
 
-		this._docModel = docModel;
-		this._docModel.addObserver(this._docEventObserver);
-
 		this._textRenderer = new TextRenderer();
+
+		EditorEventPublisher.register(this);
 
 		this._selectedPara = null;
 		this._selectedSpan = null;
@@ -52,17 +52,17 @@ class EditorView {
 			return;
 		}
 
-		if (startContainer === this._editor) {
-			targetPara = this._editor.getElementsByTagName("P")[0];
+		if (startContainer === this._editorEl) {
+			targetPara = this._editorEl.getElementsByTagName('P')[0];
 			childNode = targetPara.firstChild;
 
-			if (childNode && childNode.tagName === "SPAN") {
+			if (childNode && childNode.tagName === 'SPAN') {
 				targetSpan = childNode;
 			}
 
 		} else {
-			targetPara = Utils.findParentNode(startContainer, "P");
-			targetSpan = Utils.findParentNode(startContainer, "SPAN");
+			targetPara = Utils.findParentNode(startContainer, 'P');
+			targetSpan = Utils.findParentNode(startContainer, 'SPAN');
 		}
 
 		if (targetPara && targetSpan) {
@@ -109,7 +109,7 @@ class EditorView {
 	 * @private
 	 */
 	_clearEditor() {
-		this._editor.textContent = "";
+		this._editorEl.textContent = '';
 	}
 
 	/**
@@ -128,7 +128,7 @@ class EditorView {
 			this._clearEditor();
 
 			for (i = 0; i < contents.length; i++) {
-				this._editor.appendChild(contents[i]);
+				this._editorEl.appendChild(contents[i]);
 			}
 		}
 
@@ -154,7 +154,7 @@ class EditorView {
 			/* TODO 텍스트 셀렉션 영역이 없는 경우 처리 */
 			// targetSpan = range.startContainer;
 			// find startContainer span
-			console.log("");
+			console.log('');
 		}
 
 		if (targetSpan) {
@@ -163,7 +163,7 @@ class EditorView {
 				if (childNode) {
 					targetSpan.removeChild(childNode);
 				}
-				childNode = document.createTextNode("");
+				childNode = document.createTextNode('');
 				caretOffset = 0;
 
 				targetSpan.appendChild(childNode);
@@ -185,7 +185,7 @@ class EditorView {
 		let i = 0;
 		if (classList) {
 			for (i = 0; i < classList.length; i++) {
-				this._editorWrap.classList.add(classList[i]);
+				this._editorWrapEl.classList.add(classList[i]);
 			}
 		}
 	}
@@ -195,11 +195,11 @@ class EditorView {
 	 * @private
 	 */
 	_clearClass() {
-		let classList = this._editorWrap.classList,
+		let classList = this._editorWrapEl.classList,
 			i;
 		for (i = 0; i < classList.length; i++) {
 			if (classList[i] !== TextEditorConst.name.editorWrap) {
-				this._editorWrap.classList.remove(classList[i]);
+				this._editorWrapEl.classList.remove(classList[i]);
 			}
 		}
 	}
@@ -215,13 +215,13 @@ class EditorView {
 
 		for (key in styleInfo) {
 			if (styleInfo.hasOwnProperty(key)) {
-				value = "";
+				value = '';
 
-				if (this._editorWrap.style[key]) {
-					value = this._editorWrap.style[key] + " ";
+				if (this._editorWrapEl.style[key]) {
+					value = this._editorWrapEl.style[key] + ' ';
 				}
 
-				this._editorWrap.style[key] = value + styleInfo[key];
+				this._editorWrapEl.style[key] = value + styleInfo[key];
 			}
 		}
 	}
@@ -231,7 +231,7 @@ class EditorView {
 	 * @private
 	 */
 	_clearStyle() {
-		this._editorWrap.removeAttribute("style");
+		this._editorWrapEl.removeAttribute('style');
 	}
 
 	/**
@@ -243,7 +243,7 @@ class EditorView {
 		let key;
 		for (key in attr) {
 			if (attr.hasOwnProperty(key)) {
-				this._editorWrap.setAttribute(key, attr[key]);
+				this._editorWrapEl.setAttribute(key, attr[key]);
 			}
 		}
 	}
@@ -255,10 +255,10 @@ class EditorView {
 	_clearAttr() {
 		let key;
 		if (this._attrInfo) {
-			if (this._attrInfo.hasOwnProperty("attr")) {
+			if (this._attrInfo.hasOwnProperty('attr')) {
 				for (key in this._attrInfo.attr) {
 					if (this._attrInfo.attr.hasOwnProperty(key)) {
-						this._editorWrap.removeAttribute(key);
+						this._editorWrapEl.removeAttribute(key);
 					}
 				}
 			}
@@ -276,16 +276,16 @@ class EditorView {
 			span,
 			container;
 
-		this._editor.focus();
+		this._editorEl.focus();
 
 		if (this._selectedSpan) {
 			this._updateSelection(this._selectedSpan.firstChild, this._selectedOffset, this._selectedSpan.firstChild, this._selectedOffset);
 
 		} else {
-			paraList = this._editor.getElementsByTagName("P");
+			paraList = this._editorEl.getElementsByTagName('P');
 			if (paraList.length) {
 				para = paraList[0];
-				spanList = para.getElementsByTagName("SPAN");
+				spanList = para.getElementsByTagName('SPAN');
 				if (spanList.length) {
 					span = spanList[0];
 					container = span;
@@ -293,7 +293,7 @@ class EditorView {
 					container = para;
 				}
 			} else {
-				container = this._editor;
+				container = this._editorEl;
 			}
 
 			this._updateSelection(container, 0, container, 0);
@@ -305,7 +305,7 @@ class EditorView {
 	 * @private
 	 */
 	_blur() {
-		this._editor.blur();
+		this._editorEl.blur();
 	}
 
 	/**
@@ -322,14 +322,14 @@ class EditorView {
 			childNodes,
 			i;
 
-		targetPara = Utils.findParentNode(startContainer, "P");
+		targetPara = Utils.findParentNode(startContainer, 'P');
 
 		if (!Utils.isValidParagraph(targetPara)) {
 			if (!targetPara) {
-				if (this._editor.getElementsByTagName("P").length === 0) {
+				if (this._editorEl.getElementsByTagName('P').length === 0) {
 					if (this._selectedPara) {
 						targetPara = this._selectedPara.cloneNode(false);
-						this._editor.appendChild(targetPara);
+						this._editorEl.appendChild(targetPara);
 
 					} else {
 						return;
@@ -357,11 +357,11 @@ class EditorView {
 						textNode = targetNode;
 
 					} else {
-						targetNode = document.createElement("BR");
+						targetNode = document.createElement('BR');
 					}
 				}
 			} else { // 탐색할 node가 없는 경우
-				targetNode = document.createElement("BR");
+				targetNode = document.createElement('BR');
 			}
 
 			// 텍스트 편집기 내 내용 모두 삭제
@@ -375,13 +375,13 @@ class EditorView {
 			if (textNode) {
 				span.appendChild(textNode);
 			} else {
-				if (targetNode && targetNode.tagName === "BR") {
+				if (targetNode && targetNode.tagName === 'BR') {
 					span.appendChild(targetNode);
 				}
 			}
 
 			targetPara.appendChild(span);
-			// this._editor.appendChild(para);
+			// this._editorEl.appendChild(para);
 
 			range = document.createRange();
 
@@ -389,23 +389,23 @@ class EditorView {
 				range.selectNodeContents(textNode);
 
 			} else {
-				if (targetNode && targetNode.tagName === "BR") {
+				if (targetNode && targetNode.tagName === 'BR') {
 					range.setStart(span, 0);
 					range.setEnd(span, 0);
 				}
 			}
 
-			if ($.browser.mozilla) {
-				childNodes = this._editor.childNodes;
+			if (Config.browser.MSIE) {
+				childNodes = this._editorEl.childNodes;
 				i = 0;
 
 				while (i < childNodes.length) {
 					if (childNodes[i].nodeType === 3) {
-						this._editor.removeChild(childNodes[i]);
+						this._editorEl.removeChild(childNodes[i]);
 						continue;
 					} else {
-						if (childNodes[i].nodeName === "DIV" || childNodes[i].nodeName === "BR") {
-							this._editor.removeChild(childNodes[i]);
+						if (childNodes[i].nodeName === 'DIV' || childNodes[i].nodeName === 'BR') {
+							this._editorEl.removeChild(childNodes[i]);
 							continue;
 						}
 					}
@@ -420,16 +420,15 @@ class EditorView {
 
 	/**
 	 * textEditor의 위치, 크기를 설정한다.
-	 * @param {object} textRect
+	 * @param {object} rectInfo
 	 * @private
 	 */
-	_setTextRect(textRect) {
-		let editorWrap;
-		if (textRect) {
-			this._editorWrap.style.top = textRect.y + 'px';
-			this._editorWrap.style.left = textRect.x + 'px';
-			this._editorWrap.style.width = textRect.w + 'px';
-			this._editorWrap.style.height = textRect.h + 'px';
+	_setEditorRect(rectInfo) {
+		if (rectInfo) {
+			this._editorWrapEl.style.top = rectInfo.y + 'px';
+			this._editorWrapEl.style.left = rectInfo.x + 'px';
+			this._editorWrapEl.style.width = rectInfo.w + 'px';
+			this._editorWrapEl.style.height = rectInfo.h + 'px';
 		}
 	}
 
@@ -439,10 +438,10 @@ class EditorView {
 	 * @private
 	 */
 	_setMargin(marginInfo) {
-		this._editorWrap.style.paddingTop = marginInfo.top + 'px';
-		this._editorWrap.style.paddingLeft = marginInfo.left + 'px';
-		this._editorWrap.style.paddingRight = marginInfo.right + 'px';
-		this._editorWrap.style.paddingBottom = marginInfo.bottom + 'px';
+		this._editorWrapEl.style.paddingTop = marginInfo.top + 'px';
+		this._editorWrapEl.style.paddingLeft = marginInfo.left + 'px';
+		this._editorWrapEl.style.paddingRight = marginInfo.right + 'px';
+		this._editorWrapEl.style.paddingBottom = marginInfo.bottom + 'px';
 	}
 
 	/**
@@ -454,7 +453,7 @@ class EditorView {
 		let i = 0;
 		if (classList) {
 			for (i = 0; i < classList.length; i++) {
-				this._editorWrap.classList.add(classList[i]);
+				this._editorWrapEl.classList.add(classList[i]);
 			}
 		}
 	}
@@ -464,7 +463,7 @@ class EditorView {
 	 * @private
 	 */
 	_show() {
-		this._editorWrap.style.display = 'block';
+		this._editorWrapEl.style.display = 'block';
 	}
 
 	/**
@@ -472,7 +471,7 @@ class EditorView {
 	 * @private
 	 */
 	_hide() {
-		this._editorWrap.style.display = 'none';
+		this._editorWrapEl.style.display = 'none';
 	}
 
 	// /**
@@ -484,23 +483,23 @@ class EditorView {
 	//  * @private
 	//  */
 	// _render(contents, textRect, attrInfo, marginInfo) {
-	// 	if (this._editor) {
+	// 	if (this._editorEl) {
 	// 		//TODO innerHTML 코드 삭제
-	// 		this._editor.innerHTML = contents;
+	// 		this._editorEl.innerHTML = contents;
 	// 	}
 	//
 	// 	if (attrInfo) {
 	// 		this._attrInfo = attrInfo;
 	//
-	// 		if (attrInfo.hasOwnProperty("classList") && attrInfo.classList.length) {
+	// 		if (attrInfo.hasOwnProperty('classList') && attrInfo.classList.length) {
 	// 			_applyClass(attrInfo.classList);
 	// 		}
 	//
-	// 		if (attrInfo.hasOwnProperty("style") && attrInfo.style) {
+	// 		if (attrInfo.hasOwnProperty('style') && attrInfo.style) {
 	// 			_applyStyle(attrInfo.style);
 	// 		}
 	//
-	// 		if (attrInfo.hasOwnProperty("attr") && attrInfo.attr) {
+	// 		if (attrInfo.hasOwnProperty('attr') && attrInfo.attr) {
 	// 			_applyAttr(attrInfo.attr);
 	// 		}
 	// 	}
@@ -524,7 +523,7 @@ class EditorView {
 			let ps = body.ps;
 			let bodyPr = body.bodyPr;
 
-			this._textRenderer.render(this._editor, ps, bodyPr);
+			this._textRenderer.render(this._editorEl, ps, bodyPr);
 		}
 	}
 
@@ -533,7 +532,7 @@ class EditorView {
 	 * @private
 	 */
 	_clear() {
-		this._render("", null, null);
+		this._render('', null, null);
 
 		this._clearClass();
 		this._clearStyle();
@@ -544,15 +543,18 @@ class EditorView {
 	}
 
 	/**
-	 * document event observer
+	 * render Editor Event
 	 * @param {string} type
 	 * @param {object} value
 	 * @private
 	 */
-	_docEventObserver(type, value) {
+	notify(type, value) {
 		switch(type) {
 			case DOC_EVENT.OPEN:
 				this._render(value);
+				break;
+			case DOC_EVENT.RESIZE:
+				this._setEditorRect(value);
 				break;
 			case CMD_TYPE.RESET:
 				this._restructure(value);

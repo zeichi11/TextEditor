@@ -1,17 +1,10 @@
-import Body from 'Body';
-import { DOC_EVENT } from "../common/Constants";
+import Body from './Body';
+import { DOC_EVENT } from '../common/Constants';
+import EditorEventPublisher from '../EditorEventPublisher';
 
 const Document = function () {
 	let _body = null,
-		_observers = [];
-
-	/**
-	 * add observer
-	 * @param {function} observer
-	 */
-	function _addObserver(observer) {
-		_observers.push(observer);
-	}
+		_rectInfo = null;
 
 	/**
 	 * notify
@@ -19,10 +12,8 @@ const Document = function () {
 	 * @param {object} value
 	 * @private
 	 */
-	function _notifyObservers(type, value) {
-		_observers.forEach(function (observer) {
-			observer(type, value);
-		});
+	function _publish(type, value) {
+		EditorEventPublisher.publish(type, value);
 	}
 
 	/**
@@ -33,7 +24,12 @@ const Document = function () {
 	 */
 	function _setModel(docJson, rectInfo) {
 		_body = new Body(docJson);
-		_notifyObservers(DOC_EVENT.OPEN, _body);
+		_publish(DOC_EVENT.OPEN, _body);
+
+		if (rectInfo) {
+			_rectInfo = rectInfo;
+			_publish(DOC_EVENT.RESIZE, rectInfo);
+		}
 	}
 
 	return {
@@ -47,20 +43,12 @@ const Document = function () {
 		},
 
 		/**
-		 * add observer
-		 * @param {function} observer
-		 */
-		addObserver: function (observer) {
-			_addObserver(observer);
-		},
-
-		/**
 		 * notify
 		 * @param {string} type
 		 * @param {object} value
 		 */
-		notify: function (type, value) {
-			_notifyObservers(type, value);
+		publish: function (type, value) {
+			_publish(type, value);
 		},
 
 		/**
@@ -79,6 +67,6 @@ const Document = function () {
 			return _body;
 		}
 	}
-};
+}();
 
 export default Document;
