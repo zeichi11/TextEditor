@@ -1,39 +1,40 @@
 const CMD_TYPE = {
-		RESET: "reset",
-		CONTENT: "content",
-		TEXT: "text",
-		SELECTION: "selection",
-		BOLD: "bold",
-		ITALIC: "italic",
-		UNDERLINE: "underline",
-		DOUBLE_UNDERLINE: "dblUnderline",
-		STRIKETHROUGH: "strikethrough",
-		FONT_SIZE: "fontSize",
-		FONT_NAME: "fontName",
-		FONT_COLOR: "fontColor",
-		ALIGN: "Align",
-		ANCHOR: "Anchor",
-		INSET: "Inset"
+		RESET: 'reset',
+		CONTENT: 'content',
+		TEXT: 'text',
+		SELECTION: 'selection',
+		BOLD: 'bold',
+		ITALIC: 'italic',
+		UNDERLINE: 'underline',
+		DOUBLE_UNDERLINE: 'dblUnderline',
+		STRIKETHROUGH: 'strikethrough',
+		FONT_SIZE: 'fontSize',
+		FONT_NAME: 'fontName',
+		FONT_COLOR: 'fontColor',
+		ALIGN: 'Align',
+		ANCHOR: 'Anchor',
+		INSET: 'Inset'
 	},
 	DOC_EVENT = {
-		OPEN: "open"
+		OPEN: 'open',
+		RESIZE: 'resize'
 	},
 	NAMES = {
 		editorWrap: 'editor_wrap',
 		editorWrapClass: '.editor_wrap',
 		editor: 'editor',
 		editorClass: '.editor',
-		contentPara: "content_para",
-		contentParaClass: ".content_para",
-		textLayoutWrap: "text_layout_wrap",
-		textLayoutWrapClass: ".text_layout_wrap",
-		textLayout: "text_layout",
-		textLayoutClass: ".text_layout",
+		contentPara: 'content_para',
+		contentParaClass: '.content_para',
+		textLayoutWrap: 'text_layout_wrap',
+		textLayoutWrapClass: '.text_layout_wrap',
+		textLayout: 'text_layout',
+		textLayoutClass: '.text_layout',
 	},
 	CONSTANTS = {
 		NODE_TYPE_TEXT: window.Node.TEXT_NODE,
-		SELECTION_TYPE_RANGE: "Range",
-		SELECTION_TYPE_CARET: "Caret",
+		SELECTION_TYPE_RANGE: 'Range',
+		SELECTION_TYPE_CARET: 'Caret',
 
 		ALIGN_LEFT: 'left',
 		ALIGN_RIGHT: 'right',
@@ -131,25 +132,25 @@ const CMD_TYPE = {
 		}
 	},
 	STYLE_PROP = {
-		ALIGN_LEFT: "l",
-		ALIGN_CENTER: "ctr",
-		ALIGN_RIGHT: "r",
-		ALIGN_JUSTIFY: "just",
-		ALIGN_JUSTIFY_LOW: "justLow",
-		ALIGN_DISTRIBUTED: "dist",
-		ALIGN_THAI_DISTRIBUTE: "thaiDist",
+		ALIGN_LEFT: 'l',
+		ALIGN_CENTER: 'ctr',
+		ALIGN_RIGHT: 'r',
+		ALIGN_JUSTIFY: 'just',
+		ALIGN_JUSTIFY_LOW: 'justLow',
+		ALIGN_DISTRIBUTED: 'dist',
+		ALIGN_THAI_DISTRIBUTE: 'thaiDist',
 
-		TEXT_ANCHOR_TOP: "t",
-		TEXT_ANCHOR_CENTER: "ctr",
-		TEXT_ANCHOR_BOTTOM: "b",
-		TEXT_ANCHOR_JUSTIFY: "just", // justified
-		TEXT_ANCHOR_DISTRIBUTE: "dist", // distributed
+		TEXT_ANCHOR_TOP: 't',
+		TEXT_ANCHOR_CENTER: 'ctr',
+		TEXT_ANCHOR_BOTTOM: 'b',
+		TEXT_ANCHOR_JUSTIFY: 'just', // justified
+		TEXT_ANCHOR_DISTRIBUTE: 'dist', // distributed
 
-		TEXT_VERT_OVERFLOW_TYPE_OVERFLOW: "overflow",
-		TEXT_VERT_OVERFLOW_TYPE_ELLIPSIS: "ellipsis",
-		TEXT_VERT_OVERFLOW_TYPE_CLIP: "clip",
+		TEXT_VERT_OVERFLOW_TYPE_OVERFLOW: 'overflow',
+		TEXT_VERT_OVERFLOW_TYPE_ELLIPSIS: 'ellipsis',
+		TEXT_VERT_OVERFLOW_TYPE_CLIP: 'clip',
 
-		FONT_STYLE_UNDERLINE_DOUBLE: "dbl",
+		FONT_STYLE_UNDERLINE_DOUBLE: 'dbl',
 
 		DEFAULT_TOP_BOTTOM_INS: 46990,
 		DEFAULT_LEFT_RIGHT_INS: 90170,
@@ -157,17 +158,27 @@ const CMD_TYPE = {
 		DEFAULT_TOP_BOTTOM_COMMENT_INS: 19050,
 		DEFAULT_LEFT_RIGHT_COMMENT_INS: 28575,
 
-		NO_FILL: "noFill",
-		SOLID_FILL: "solidFill",
-		GRAD_FILL: "gradFill",
-		BLIP_FILL: "blipFill",
-		PATT_FILL: "pattFill",
-		GRP_FILL: "grpFill",
+		NO_FILL: 'noFill',
+		SOLID_FILL: 'solidFill',
+		GRAD_FILL: 'gradFill',
+		BLIP_FILL: 'blipFill',
+		PATT_FILL: 'pattFill',
+		GRP_FILL: 'grpFill',
 
 		DEFAULT_LINE_HEIGHT: 1.6
 	},
 	REGEX = {
 		newLine: /(?:\r\n|\r|\n)/g
+	},
+	BROWSER = {
+		CHROME: 'Chrome',
+		SAFARI: 'Safari',
+		EDGE: 'Edge',
+		OPR: 'OPR',
+		FIREFOX: 'Firefox',
+		MSIE: 'MSIE',
+		WIN: 'Win',
+		TRIDENT: 'Trident'
 	};
 
-export { CMD_TYPE, DOC_EVENT, NAMES, CONSTANTS, KEY_CODE, MODIFIER_KEYS, MESSAGE, STYLE_PROP, REGEX };
+export { CMD_TYPE, DOC_EVENT, NAMES, CONSTANTS, KEY_CODE, MODIFIER_KEYS, MESSAGE, STYLE_PROP, REGEX, BROWSER };
