@@ -1,13 +1,14 @@
-import EditorView from 'view/EditorView';
-import KeyHandler from 'event/KeyHandler';
-import MouseHandler from 'event/MouseHandler';
-import CommandExecutor from 'command/CommandExecutor';
-import UndoRedo from 'command/UndoRedo';
-import Document from 'model/Document';
-import Utils from 'common/Utils';
-import { MESSAGE } from 'common/Constants';
+import EditorView from './view/EditorView';
+import KeyHandler from './event/KeyHandler';
+import MouseHandler from './event/MouseHandler';
+import CommandExecutor from './command/CommandExecutor';
+import Document from './model/Document';
+import UndoRedo from './command/UndoRedo';
+import Config from './common/Config';
+import Utils from './common/Utils';
+import { MESSAGE } from './common/Constants';
 
-class TextEditor {
+class Editor {
 	/**
 	 * constructor
 	 * @param {Element} container
@@ -23,8 +24,10 @@ class TextEditor {
 			return;
 		}
 
-		CommandExecutor.init();
+
+		Utils.init(this);
 		UndoRedo.init(CommandExecutor);
+		Config.browser = Utils.getBrowser();
 
 		KeyHandler.init(this, CommandExecutor, container);
 		MouseHandler.init(this, CommandExecutor, Utils, container);
@@ -66,7 +69,7 @@ class TextEditor {
 	 * @private
 	 */
 	setEditorStateCache(contents, range) {
-		var editorState,
+		let editorState,
 			selection;
 
 		if (contents && range) {
@@ -105,21 +108,9 @@ class TextEditor {
 		this._editorView.hide();
 
 		this._editorView.blur();
-		TextUndoRedo.clear();
+		UndoRedo.clear();
 		this._editorStateCache = null;
-	}
-
-	/**
-	 * close
-	 * @private
-	 */
-	function _close() {
-		TextEditorView.clear();
-		TextEditorView.hide();
-		TextEditorView.blur();
-		TextUndoRedo.clear();
-		_editorStateCache = null;
 	}
 }
 
-export default TextEditor;
+export default Editor;
