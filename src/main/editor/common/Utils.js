@@ -1,12 +1,45 @@
-import { CONSTANTS } from "./Constants";
+import $ from 'jquery';
+import { CONSTANTS, BROWSER } from "./Constants";
 
 export default {
 	/**
 	 * init
-	 * @param {Element} editor
+	 * @param {Object} editor
 	 */
-	init: (editor) => {
+	init: function (editor) {
 		this.editor = editor;
+	},
+
+	/**
+	 * browser를 반환한다.
+	 * @returns {*}
+	 */
+	getBrowser: function () {
+		const browserProps = [BROWSER.EDGE, BROWSER.OPR, BROWSER.CHROME, BROWSER.FIREFOX, BROWSER.SAFARI, BROWSER.MSIE];
+		let browser = {};
+
+		browserProps.forEach(prop => browser[prop] = false);
+
+		if (navigator.userAgent.indexOf(BROWSER.CHROME) > -1 && navigator.userAgent.indexOf(BROWSER.SAFARI) > -1 && navigator.userAgent.indexOf(BROWSER.EDGE) > -1) {
+			browser[BROWSER.EDGE] = true;
+		}
+		if (navigator.userAgent.indexOf(BROWSER.CHROME) > -1 && navigator.userAgent.indexOf(BROWSER.SAFARI) > -1 && navigator.userAgent.indexOf(BROWSER.OPR) > -1) {
+			browser[BROWSER.OPR] = true;
+		}
+		if (navigator.userAgent.indexOf(BROWSER.CHROME) > -1 && navigator.userAgent.indexOf(BROWSER.SAFARI) > -1) {
+			browser[BROWSER.CHROME] = true;
+		}
+		if (navigator.userAgent.indexOf(BROWSER.FIREFOX)) {
+			browser[BROWSER.FIREFOX] = true;
+		}
+		if (navigator.userAgent.indexOf(BROWSER.SAFARI)) {
+			browser[BROWSER.SAFARI] = true;
+		}
+		if (navigator.userAgent.indexOf(BROWSER.MSIE) > -1 || navigator.userAgent.indexOf(BROWSER.WIN) > -1 || navigator.userAgent.indexOf(BROWSER.TRIDENT) > -1) {
+			browser[BROWSER.MSIE] = true;
+		}
+
+		return browser;
 	},
 
 	/**

@@ -1,5 +1,6 @@
 import { CMD_TYPE, KEY_CODE } from '../common/Constants';
 import Utils from '../common/Utils';
+import Config from '../common/Config';
 import UndoRedo from '../command/UndoRedo';
 
 const KeyHandler = function () {
@@ -250,7 +251,7 @@ const KeyHandler = function () {
 		textField.style.position = "absolute";
 		document.body.appendChild(textField);
 
-		if ($.browser.msie) {
+		if (Config.browser.MSIE) {
 			selection = Utils.getSelection();
 			if (selection) {
 				selection.selectAllChildren(textField);
@@ -329,13 +330,13 @@ const KeyHandler = function () {
 	 * @private
 	 */
 	function _executeUpdateSelection(event) {
-		let range;
 		if (event.keyCode === KEY_CODE.LEFT || event.keyCode === KEY_CODE.RIGHT ||
 			event.keyCode === KEY_CODE.DOWN || event.keyCode === KEY_CODE.UP ||
 			event.keyCode === KEY_CODE.BACK_SPACE || event.keyCode === KEY_CODE.DELETE ||
 			event.keyCode === KEY_CODE.SPACE) {
 
-			range = Utils.getRange();
+			let range = Utils.getRange();
+
 			if (range) {
 				_executeCommand(CMD_TYPE.SELECTION, {"updateState": true}, range);
 			}
@@ -350,10 +351,11 @@ const KeyHandler = function () {
 	function _executeShortCut(event) {
 		let ctrl = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.ctrl],
 			alt = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.alt],
-			shift = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.shift],
-			keyCode = event.keyCode;
+			shift = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.shift];
 
 		if (ctrl && !alt && !shift) {
+			let keyCode = event.keyCode;
+
 			switch (keyCode) {
 				case KEY_CODE.C:
 					_handleInnerCopyCut(true);
@@ -375,10 +377,11 @@ const KeyHandler = function () {
 	function _isCopyCutShorcut(event) {
 		let ctrl = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.ctrl],
 			alt = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.alt],
-			shift = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.shift],
-			keyCode = event.keyCode;
+			shift = _modKeyInfo[MODIFIER_KEY_INDEX_MAP.shift];
 
 		if (ctrl && !alt && !shift) {
+			let keyCode = event.keyCode;
+
 			if (keyCode === KEY_CODE.C || keyCode === KEY_CODE.X) {
 				return true;
 			}
@@ -395,11 +398,7 @@ const KeyHandler = function () {
 	 */
 	function _isNeedToPropagate(event) {
 		let keyCode = event.keyCode;
-		if (keyCode === KEY_CODE.ESC ||
-			keyCode === KEY_CODE.F10) {
-			return true;
-		}
-		return false;
+		return keyCode === KEY_CODE.ESC || keyCode === KEY_CODE.F10;
 	}
 
 	/**
@@ -409,13 +408,10 @@ const KeyHandler = function () {
 	 */
 	function _updateHeadParagraph() {
 		let editor = _textEditor.getEditor(),
-			paraList,
-			childNode;
-
-		paraList = editor.getElementsByTagName("P");
+			paraList = editor.getElementsByTagName("P");
 
 		if (paraList.length) {
-			childNode = paraList[0].firstChild;
+			let childNode = paraList[0].firstChild;
 
 			// p > span 구조인 경우에만 headPara 설정
 			if (childNode && childNode.tagName === "SPAN") {
@@ -437,8 +433,6 @@ const KeyHandler = function () {
 	 * @private
 	 */
 	function _keyDown(event){
-		let range;
-
 		_updateHeadParagraph();
 
 		if (_isNeedToPropagate(event)) {
@@ -465,7 +459,7 @@ const KeyHandler = function () {
 		// ctrl, alt, shift 키가 눌린 상태로 keydown 이벤트가 발생 시에는 reset 처리 여부 확인하도록 코드 추가
 		if (_modKeyInfo[MODIFIER_KEY_INDEX_MAP.ctrl] || (_modKeyInfo[MODIFIER_KEY_INDEX_MAP.alt] || _modKeyInfo[MODIFIER_KEY_INDEX_MAP.shift])) {
 			if (_isCopyCutShorcut(event)) {
-				range = Utils.getRange();
+				let range = Utils.getRange();
 				if (range) {
 					_executeCommand(CMD_TYPE.RESET, {}, range);
 				}
@@ -486,12 +480,10 @@ const KeyHandler = function () {
 	 * @private
 	 */
 	function _keyUp(event){
-		let range;
-
 		event.stopImmediatePropagation();
 
 		if (!_isCompositionStart) {
-			range = Utils.getRange();
+			let range = Utils.getRange();
 			if (range) {
 				_executeCommand(CMD_TYPE.RESET, {}, range);
 			}
@@ -533,23 +525,9 @@ const KeyHandler = function () {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 
-		let selection,
-			range,
-			textRangeState,
-			templatePara,
-			contentParaList,
-			prevContents,
-			prevRangeInfo,
-			contents,
-			combineResult,
-			currEditorState,
-			text = "",
-			value,
-			rValue,
-			cmd,
-			rCmd;
+		let text = "";
 
-		if ($.browser.msie) {
+		if (Config.browser.MSIE) {
 			if (event.originalEvent) {
 				text = event.originalEvent.view.clipboardData.getData("text");
 			} else {
@@ -564,23 +542,34 @@ const KeyHandler = function () {
 			return;
 		}
 
-		selection = Utils.getSelection();
-		if (selection) {
-			range = Utils.getRange(selection);
-			if (range) {
-				textRangeState = Utils.getTextRangeState(range);
+		let selection = Utils.getSelection();
 
-				currEditorState = Utils.captureEditorState(range);
-				prevContents = Utils.getParagraphs(currEditorState[0]);
-				prevRangeInfo = currEditorState[1];
+		if (selection) {
+			let range = Utils.getRange(selection);
+
+			if (range) {
+				let textRangeState = Utils.getTextRangeState(range),
+					currEditorState = Utils.captureEditorState(range),
+					prevContents = Utils.getParagraphs(currEditorState[0]),
+					prevRangeInfo = currEditorState[1],
+					templatePara,
+					contentParaList,
+					combineResult,
+					contents,
+					value,
+					rValue,
+					cmd,
+					rCmd;
 
 				range = Utils.deleteSelectionRange(selection, range);
 
 				if (textRangeState.sSpan) {
 					templatePara = Utils.generateTemplateParagraph(textRangeState.sPara, textRangeState.sSpan);
+
 				} else {
 					templatePara = textRangeState.sPara;
 				}
+
 				contentParaList = Utils.generateParagraph(text, templatePara);
 
 				combineResult = Utils.combineContents(contentParaList, range);

@@ -1,4 +1,5 @@
 import { CMD_TYPE } from "../common/Constants";
+import Config from '../common/Config';
 import Utils from '../common/Utils';
 
 const MouseHandler = function () {
@@ -86,7 +87,7 @@ const MouseHandler = function () {
 			target.addEventListener("mouseup", _mouseUp);
 			target.addEventListener("selectstart", _stopImmediatePropagation);
 
-			if ($.browser.mozilla) {
+			if (Config.browser.Firefox) {
 				target.addEventListener("DOMMouseScroll", _stopImmediatePropagation);
 			} else {
 				target.addEventListener("mousewheel", _stopImmediatePropagation);
