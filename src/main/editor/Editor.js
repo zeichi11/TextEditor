@@ -11,12 +11,11 @@ import { MESSAGE } from './common/Constants';
 class Editor {
 	/**
 	 * constructor
-	 * @param {Element} container
+	 * @param {Element} containerEl
 	 */
-	constructor(container) {
+	constructor(containerEl) {
 		try {
-			this._docModel = new Document();
-			this._editorView = new EditorView(container, this._docModel);
+			this._editorView = new EditorView(containerEl);
 			this._editorStateCache = null;
 
 		} catch {
@@ -24,13 +23,12 @@ class Editor {
 			return;
 		}
 
-
 		Utils.init(this);
 		UndoRedo.init(CommandExecutor);
 		Config.browser = Utils.getBrowser();
 
-		KeyHandler.init(this, CommandExecutor, container);
-		MouseHandler.init(this, CommandExecutor, Utils, container);
+		KeyHandler.init(this, CommandExecutor, containerEl);
+		MouseHandler.init(this, CommandExecutor, Utils, containerEl);
 	}
 
 	/**
@@ -48,7 +46,7 @@ class Editor {
 		}
 
 		if (rectInfo) {
-			this._docModel.setModel(docJson, rectInfo);
+			Document.setModel(docJson, rectInfo);
 		}
 	}
 

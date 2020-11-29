@@ -1,5 +1,5 @@
-import BodyPr from 'BodyPr';
-import Paragraph from 'Paragraph';
+import BodyPr from './BodyPr';
+import Paragraph from './Paragraph';
 
 class Body {
 	/**
@@ -25,7 +25,7 @@ class Body {
 	 * Textbody Properties를 반환한다.
 	 * @returns {*}
 	 */
-	get bodyPr() {
+	getBodyPr() {
 		return this.bodyPr;
 	};
 
@@ -33,7 +33,7 @@ class Body {
 	 * Paragraph List를 반환한다.
 	 * @returns {*}
 	 */
-	get ps() {
+	getPs() {
 		return this.ps;
 	};
 
@@ -41,7 +41,7 @@ class Body {
 	 * Textbody Properties를 설정한다.
 	 * @param {object} bodyPr
 	 */
-	set bodyPr(bodyPr) {
+	setBodyPr(bodyPr) {
 		this.bodyPr = bodyPr;
 	};
 
@@ -49,7 +49,7 @@ class Body {
 	 * Paragraph List를 설정한다.
 	 * @param {Array} ps
 	 */
-	set ps(ps) {
+	setPs(ps) {
 		this.ps = ps;
 	};
 }
