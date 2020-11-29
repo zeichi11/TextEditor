@@ -1,5 +1,5 @@
 import { NAMES, REGEX } from '../../common/Constants';
-import TextStyleRenderer from 'TextStyleRenderer';
+import TextStyleRenderer from './TextStyleRenderer';
 
 class TextRenderer {
 	/*

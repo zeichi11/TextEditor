@@ -1,13 +1,12 @@
-import Editor from 'src/editor/Editor';
-import { CMD_TYPE } from 'common/Constants';
+import Editor from './Editor';
+import { CMD_TYPE } from './common/Constants';
 
 let EditorAPI = (() => {
-	let _textEditor;
+	let _editor;
 
 	return {
 		init: function (container) {
-			_textEditor = new Editor();
-			_textEditor.init(container);
+			_editor = new Editor(container);
 		},
 
 		/**
@@ -20,7 +19,7 @@ let EditorAPI = (() => {
 		 * @private
 		 */
 		open: function (contents, rectInfo, classList, marginInfo, hide) {
-			_textEditor.open(contents, rectInfo, classList, marginInfo, hide);
+			_editor.open(contents, rectInfo, classList, marginInfo, hide);
 		},
 
 		/**
@@ -28,7 +27,7 @@ let EditorAPI = (() => {
 		 * @private
 		 */
 		close: function () {
-			_textEditor.close();
+			_editor.close();
 		},
 
 		/**
@@ -38,7 +37,7 @@ let EditorAPI = (() => {
 		 * @private
 		 */
 		execCommand: function (type, value) {
-			_textEditor.execCommand(type, value);
+			_editor.execCommand(type, value);
 		},
 
 		/**

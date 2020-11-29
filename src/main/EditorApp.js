@@ -1,33 +1,27 @@
 import EditorAPI from './editor/EditorAPI';
-import { $, jqurey } from 'jquery';
 
-class EditorApp extends EditorAPI {
+class EditorApp {
 	/**
 	 * constructor
-	 * @param {Element} appContainer
+	 * @param {Element} appContainerEl
 	 */
-	constructor(appContainer) {
-		super();
-
-		window.$ = $;
-		window.jquery = jquery;
-
-		this._initTextEditor(appContainer)
+	constructor(appContainerEl) {
+		this._initTextEditor(appContainerEl);
 	}
 
 	/**
 	 * init TextEditor
-	 * @param {Element} appContainer
+	 * @param {Element} appContainerEl
 	 * @private
 	 */
-	_initTextEditor(appContainer) {
-		let editorWrap = document.createElement("DIV"),
-			innerContainer = document.createElement("DIV");
+	_initTextEditor(appContainerEl) {
+		let editorWrapEl = document.createElement("DIV"),
+			innerContainerEl = document.createElement("DIV");
 
-		EditorAPI.init(editorWrap);
+		EditorAPI.init(editorWrapEl);
 
-		innerContainer.appendChild(editorWrap);
-		appContainer.appendChild(innerContainer);
+		innerContainerEl.appendChild(editorWrapEl);
+		appContainerEl.appendChild(innerContainerEl);
 	}
 
 	/**
@@ -42,8 +36,11 @@ class EditorApp extends EditorAPI {
 	/**
 	 * open (public)
 	 * @param {object} documentJson
+	 * @param {object} rectInfo
 	 */
-	open(documentJson) {
-		this._open(documentJson);
+	open(documentJson, rectInfo) {
+		this._open(documentJson, rectInfo);
 	};
 }
+
+export default EditorApp;

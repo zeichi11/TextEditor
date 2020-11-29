@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { STYLE_PROP } from '../../common/Constants';
 import Utils from '../../common/Utils';
 
