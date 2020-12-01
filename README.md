@@ -14,7 +14,7 @@ contentEditor 기능을 기반으로 텍스트 입력, 서식 편집 등의 작�
 ## 모델
 OOXML의 Document 속성들을 JSON 형식으로 모델링
 
-#### 전제 모델 구조
+#### - 전제 모델 구조
 <pre>
 Document: {
   bodyPr: {},               // document body properties : 문서 전체 속성정보
