@@ -1,20 +1,20 @@
 # TextEditor
 
-## 프로젝트 컨셉
+## 1. 프로젝트 컨셉
 contentEditor 기능을 기반으로 텍스트 입력, 서식 편집 등의 작업을 할 수 있는 텍스트 편집기를 구현한다.<br/>
 텍스트 편집기의 연동을 위해 편집 동작을 수행시킬 수 있는 API 함수 및 편집기 내 event 전달을 위한 publisher도 함께 구현한다.<br/>
 
-## 구조
+## 2. 구조
 
 
-## 동작
+## 3. 동작
 - 텍스트 입력 : contentEditable의 기본 입력 동작을 활용<br/>
 - 텍스트 서식 : 편집 action을 통한 css 서식 적용<br/>
 
-## 모델
+## 4. 모델
 OOXML의 Document 속성들을 JSON 형식으로 모델링
 
-#### 1. 전제 모델 구조
+#### 1) 전제 모델 구조
 <pre>
 Document: {
   bodyPr: {},               // document body properties : 문서 전체 속성정보
@@ -36,26 +36,26 @@ Document: {
 }
 </pre>
 
-#### 2. 문서 전체 속성정보(bodyPr)
+#### 2) 문서 전체 속성정보(bodyPr)
 <pre>
 bodyPr: {
   
 {
 </pre>
-#### 3. 문단 속성정보(pPr)
+#### 3) 문단 속성정보(pPr)
 <pre>
 pPr: {
   
 {
 </pre>
-#### 4. run 속성정보(rPr)
+#### 4) run 속성정보(rPr)
 <pre>
 rPr: {
   
 }
 </pre>
 
-## HTML 렌더링
+## 5. HTML 렌더링
 ```
 <div contentEditable="true">
   <p>
