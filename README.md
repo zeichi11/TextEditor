@@ -53,12 +53,12 @@ rPr: {
 </pre>
 
 ### 텍스트 편집기 렌더링 HTML 구조
-'''
+```
 <div contentEditable="true">
   <p>
     <span style="font-size:12pt;">텍스트</span><span> </span><span >편집기</span>
   </p>
 </div>
-'''
+```
 
 
