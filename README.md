@@ -8,7 +8,7 @@ contentEditor 기능을 기반으로 텍스트 입력, 서식 편집 등의 작�
 
 
 ## 동작
-- 텍스트 입력 : contentEditable의 기본 입력 동작을 활용<br/>
+- 셀렉션 및 텍스트 입력 : contentEditable의 기본 입력 동작을 활용<br/>
 - 텍스트 서식 : 편집 action을 통한 css 서식 적용<br/>
 
 ## 모델
@@ -67,6 +67,8 @@ rPr: {
 </pre>
 
 ## HTML 렌더링
+paragraph는 p 태그로 표현, paragraph 내에는 문단을 구성하는 텍스트 단위(run)이 span으로 표현된다.<br/>
+paragraph properties 정보는 p 태그의 style 속성으로 렌더링, run properties 정보는 span 태그의 style 속성으로 렌더링한다.<br/>
 ```
 <div contentEditable="true">
   <p>
