@@ -39,19 +39,30 @@ Document: {
 #### 2. 문서 전체 속성정보(bodyPr)
 <pre>
 bodyPr: {
-  
+  anchor: 't',      // 세로정렬 : "t", "ctr", "b"
+  tIns: '',
+  lIns: '',
+  rIns: '',
+  bIns: ''
 {
 </pre>
 #### 3. 문단 속성정보(pPr)
 <pre>
 pPr: {
-  
+  algn: 'l',        //  가로정렬 : "l", "ctr", "r"
 {
 </pre>
 #### 4. run 속성정보(rPr)
 <pre>
 rPr: {
-  
+  b: 1,             // bold : 0 / 1
+  i: 1,             // italic : 0 / 1
+  u: 'sng'          // underline : 'sng' / 'dbl(브라우저 렌더링 이슈로 현재 미지원)' / 'none'
+  strike: 1,        // strike : 0 / 1
+  sz: 1200,         // font-size (pt x 100)
+  ea: {             // ea, latin font info
+    typeface: 'nanumgothic'
+  }
 }
 </pre>
 
