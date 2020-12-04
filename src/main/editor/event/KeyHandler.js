@@ -11,7 +11,7 @@ const KeyHandler = function () {
 		};
 
 	let _modKeyInfo = [],
-		_textEditor,
+		_editor,
 		_commandExecutor,
 		_headPara,
 		_headSpan,
@@ -44,40 +44,36 @@ const KeyHandler = function () {
 	 * @private
 	 */
 	function _pushContentCommand() {
-		let editorStateCache = _textEditor.getEditorStateCache(),
-			selection = Utils.getSelection(),
-			currEditorState,
-			currContents,
-			prevContents,
-			prevRangeInfo,
-			currRangeInfo,
-			cmdValue,
-			rCmdValue,
-			range,
-			cmd,
-			rCmd;
+		let selection = Utils.getSelection(),
+			range;
+
 
 		if (selection) {
 			range = Utils.getRange(selection);
 
 			if (range) {
-				currEditorState = Utils.captureEditorState(range);
-				currContents = Utils.getParagraphs(currEditorState[0]);
-				currRangeInfo = currEditorState[1];
+				let currEditorState = Utils.captureEditorState(range),
+					currContents = Utils.getParagraphs(currEditorState[0]),
+					currRangeInfo = currEditorState[1],
+					cmdValue,
+					rCmdValue,
+					cmd,
+					rCmd;
 
 				cmdValue = {"contents": currContents, "needToRender": false};
 				cmd = {"type": CMD_TYPE.CONTENT, "value": cmdValue, "range": currRangeInfo};
 
+				let editorStateCache = _editor.getEditorStateCache();
 				if (editorStateCache) {
-					prevContents = editorStateCache[0];
-					prevRangeInfo = editorStateCache[1];
+					let prevContents = editorStateCache[0],
+						prevRangeInfo = editorStateCache[1];
 
 					rCmdValue = {"contents": prevContents, "needToRender": false};
 					rCmd = {"type": CMD_TYPE.CONTENT, "value": rCmdValue, "range": prevRangeInfo};
 				}
 
 				_execContentCommand(cmd, rCmd);
-				_textEditor.setEditorStateCache(currContents, currRangeInfo);
+				_editor.setEditorStateCache(currContents, currRangeInfo);
 			}
 		}
 	}
@@ -155,7 +151,7 @@ const KeyHandler = function () {
 		}
 
 		if (execResult) {
-			_textEditor.setEditorStateCache(null, null);
+			_editor.setEditorStateCache(null, null);
 		}
 
 		return execResult;
@@ -318,7 +314,7 @@ const KeyHandler = function () {
 
 				if (event.keyCode === KEY_CODE.LEFT || event.keyCode === KEY_CODE.RIGHT
 					|| event.keyCode === KEY_CODE.DOWN || event.keyCode === KEY_CODE.UP) {
-					_textEditor.setEditorStateCache(null, null);
+					_editor.setEditorStateCache(null, null);
 				}
 			}
 		}
@@ -407,8 +403,8 @@ const KeyHandler = function () {
 	 * @private
 	 */
 	function _updateHeadParagraph() {
-		let editor = _textEditor.getEditor(),
-			paraList = editor.getElementsByTagName("P");
+		let editorEl = Utils.getEditorElement(),
+			paraList = editorEl.getElementsByTagName("P");
 
 		if (paraList.length) {
 			let childNode = paraList[0].firstChild;
@@ -590,12 +586,12 @@ const KeyHandler = function () {
 	return {
 		/**
 		 * init
-		 * @param {object} textEditor
+		 * @param {object} editor
 		 * @param {object} commandExecutor
 		 * @param {Element} container
 		 */
-		init: function (textEditor, commandExecutor, container) {
-			_textEditor = textEditor;
+		init: function (editor, commandExecutor, container) {
+			_editor = editor;
 			_commandExecutor = commandExecutor;
 
 			this.bind(container);

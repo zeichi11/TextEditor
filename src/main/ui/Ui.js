@@ -1,4 +1,6 @@
 import EditorAPI from '../editor/EditorAPI';
+// import UiStyle from './Ui.css';
+import './Ui.css';
 
 let Ui = function () {
 	const BTN_CLASS = 'btn';
@@ -10,6 +12,16 @@ let Ui = function () {
 	const ITALIC = 'italic';
 	const UNDERLINE = 'underline';
 	const STRIKE = 'strikethrough';
+
+	// const BTN_CLASS = UiStyle['btn'];
+	// const SEP_LINE_CLASS = UiStyle['sep_line'];
+	// const COMBO_CLASS = UiStyle['combo'];
+	// const INPUT_CLASS = UiStyle['input'];
+	// const ON_CLASS = UiStyle['on'];
+	// const BOLD = UiStyle['bold'];
+	// const ITALIC = UiStyle['italic'];
+	// const UNDERLINE = UiStyle['underline'];
+	// const STRIKE = UiStyle['strike_through'];
 
 	/**
 	 * get state
@@ -28,11 +40,12 @@ let Ui = function () {
 
 	/**
 	 * click event handler
-	 * @param {Element} targetEl
+	 * @param {Event} event
 	 * @private
 	 */
-	function _handleClick(targetEl) {
-		let classList = targetEl.classList,
+	function _handleClick(event) {
+		let targetEl = event.target,
+			classList = targetEl.classList,
 			state;
 
 		if (classList.contains(BTN_CLASS)) {
@@ -82,15 +95,16 @@ let Ui = function () {
 		}
 
 		btnSpanEl.appendChild(btnText);
+		btnEl.appendChild(btnSpanEl);
 
-		return btnEl.appendChild(btnSpanEl);
+		return btnEl;
 	}
 
 	return {
 		/**
 		 * render
 		 */
-		render() {
+		render(uiContainerEl) {
 			let	boldBtnEl = _createBtn(BOLD, {fontWeight: 'bold'}, 'B'),
 				italicBtnEl = _createBtn(ITALIC, {fontStyle: 'italic'}, 'I'),
 				underlineBtnEl = _createBtn(UNDERLINE, {textDecoration: 'underline'}, 'U'),
@@ -99,11 +113,12 @@ let Ui = function () {
 
 			sepLine.classList.add(SEP_LINE_CLASS);
 
-			[boldBtnEl, italicBtnEl, underlineBtnEl, strikeBtnEl].every(function (el) {
+			[boldBtnEl, italicBtnEl, underlineBtnEl, strikeBtnEl].forEach(function (el) {
 				_bindEvent(el);
+				uiContainerEl.appendChild(el);
 			});
 		}
 	};
-};
+}();
 
 export default Ui;

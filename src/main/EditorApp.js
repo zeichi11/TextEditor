@@ -15,13 +15,10 @@ class EditorApp {
 	 * @private
 	 */
 	_initTextEditor(appContainerEl) {
-		let editorWrapEl = document.createElement("DIV"),
-			innerContainerEl = document.createElement("DIV");
+		let editorWrapEl = document.createElement("DIV");
 
 		EditorAPI.init(editorWrapEl);
-
-		innerContainerEl.appendChild(editorWrapEl);
-		appContainerEl.appendChild(innerContainerEl);
+		appContainerEl.appendChild(editorWrapEl);
 	}
 
 	/**

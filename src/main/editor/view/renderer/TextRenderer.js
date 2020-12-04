@@ -234,13 +234,13 @@ class TextRenderer {
 
 	/**
 	 * paragraph 요소를 생성한다.
+	 * @param {Element} editorEl
 	 * @param {object} ps
 	 * @private
 	 */
-	_createParagraphs(ps) {
+	_createParagraphs(editorEl, ps) {
 		let p,
 			pTag,
-			container = document.createElement('DIV'),
 			i;
 		for (i = 0; i < ps.length; i++) {
 			p = ps[i];
@@ -256,40 +256,31 @@ class TextRenderer {
 			}
 			this._applyPpr(pTag, p.pPr);
 
-			container.appendChild(pTag);
+			editorEl.appendChild(pTag);
 		}
-
-		return container.innerHTML;
 	}
 
 	/**
 	 * txBody를 HTML element로 렌더링한다.
+	 * @param {Element} editorWrapEl
 	 * @param {Array} ps
 	 * @param {object} bodyPr
 	 * @returns {*}
 	 * @private
 	 */
-	_renderTxBody(ps, bodyPr) {
-		let contentDiv = document.createElement('DIV'),
-			layout = document.createElement('DIV');
-
-		layout.classList.add(NAMES.textLayout);
-		contentDiv.classList.add(NAMES.textContent);
-		contentDiv.classList.add(NAMES.textBreakWord);
-
-		// TODO 텍스트 박스 편집 기능 추가 후 처리
-		// div.setAttribute('contenteditable', 'true');
-
+	_renderTxBody(editorWrapEl, ps, bodyPr) {
+		let editorEl = editorWrapEl.firstChild;
 		if (ps) {
-			contentDiv.innerHTML = this._createParagraphs(ps);
-		}
-		layout.appendChild(contentDiv);
+			this._createParagraphs(editorEl, ps);
 
+			editorEl.classList.add(NAMES.textContent);
+			editorEl.classList.add(NAMES.textBreakWord);
+		}
+
+		editorWrapEl.classList.add(NAMES.textLayout);
 		if (bodyPr) {
-			this._applyBodyPr(layout, bodyPr);
+			this._applyBodyPr(editorWrapEl, bodyPr);
 		}
-
-		return layout;
 	}
 
 	/**
@@ -400,13 +391,12 @@ class TextRenderer {
 
 	/**
 	 * render text
-	 * @param {Element} editor
+	 * @param {Element} editorWrapEl
 	 * @param {Array} ps
 	 * @param {object} bodyPr
 	 */
-	render(editor, ps, bodyPr) {
-		let textDIV = this._renderTxBody(this._convertNewLineToParagraph(ps), bodyPr);
-		editor.innerHTML = textDIV.innerHTML;
+	render(editorWrapEl, ps, bodyPr) {
+		this._renderTxBody(editorWrapEl, this._convertNewLineToParagraph(ps), bodyPr);
 	}
 }
 

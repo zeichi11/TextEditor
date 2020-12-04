@@ -1,0 +1,30 @@
+.editor:focus {
+    outline: 0px solid transparent;
+}
+
+.editor {
+    word-wrap: break-word;
+}
+
+.content_para {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.text_editor_fixed > .text_editor {
+    position: fixed;
+    width: inherit;
+}
+
+.text_overflow_scroll {
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.text_overflow_scroll::-webkit-scrollbar {
+    display: none;
+}
+/*.simple_clip_overflow {*/
+    /*overflow: hidden;*/
+/*}*/

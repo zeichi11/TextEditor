@@ -10,6 +10,10 @@ export default {
 		this.editor = editor;
 	},
 
+	getEditorElement: function () {
+		return document.querySelector('.editor_wrap').firstChild;
+	},
+
 	/**
 	 * browser를 반환한다.
 	 * @returns {*}
@@ -140,7 +144,8 @@ export default {
 	 * @private
 	 */
 	validateSingleParagraph: function () {
-		let paraList = this.editor.getElementsByTagName("P"),
+		let editorEl = this.getEditorElement(),
+			paraList = editorEl.getElementsByTagName("P"),
 			childNode;
 
 		if (paraList.length) {
@@ -436,9 +441,10 @@ export default {
 	 * @returns {*[]}
 	 */
 	captureEditorState: function (range) {
-		let editorClone = this.editor.cloneNode(false),
+		let editorEl = this.getEditorElement(),
+			editorClone = editorEl.cloneNode(false),
 			textRangeState = this.getTextRangeState(range),
-			contents = this.editor.childNodes,
+			contents = editorEl.childNodes,
 			startTarget,
 			endTarget,
 			para,
@@ -627,7 +633,8 @@ export default {
 	 * @private
 	 */
 	deleteSelectionRange: function (selection, range) {
-		let startContainer = range.startContainer,
+		let editorEl = this.getEditorElement(),
+			startContainer = range.startContainer,
 			startOffset = range.startOffset,
 			endContainer = range.endContainer,
 			endOffset = range.endOffset,
@@ -664,7 +671,7 @@ export default {
 					startPara.appendChild(spanList[i]);
 				}
 
-				this.editor.removeChild(endPara);
+				editorEl.removeChild(endPara);
 			}
 
 			if (startContainer.nodeType === CONSTANTS.NODE_TYPE_TEXT) {

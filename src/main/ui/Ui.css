@@ -1,0 +1,41 @@
+.btn {
+    position: relative;
+    display: inline-block;
+    background-color: darkgrey;
+    border: 1px black solid;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.sep_line {
+
+}
+
+.combo {
+
+}
+
+.input {
+
+}
+
+.on {
+    background-color: lightgrey;
+}
+
+.bold {
+
+}
+
+.italic {
+
+}
+
+.underline {
+
+}
+
+.strike_through {
+
+}

@@ -3,6 +3,7 @@ import TextRenderer from './renderer/TextRenderer';
 import Config from '../common/Config';
 import Utils from '../common/Utils';
 import EditorEventPublisher from '../EditorEventPublisher';
+import './css/editor.css';
 
 class EditorView {
 	/**
@@ -14,7 +15,8 @@ class EditorView {
 		this._editorWrapEl.classList.add(NAMES.editorWrap);
 
 		this._editorEl = document.createElement('DIV');
-		this._editorEl.setAttribute('contentEditorble', 'true');
+		this._editorEl.classList.add(NAMES.editor);
+		this._editorEl.setAttribute('contenteditable', 'true');
 		this._editorEl.setAttribute('spellcheck', false);
 
 		this._editorWrapEl.appendChild(this._editorEl);
@@ -345,7 +347,7 @@ class EditorView {
 			}
 
 			if (targetNode) { // 탐색할 node가 있는 경우
-				if (targetNode.nodeType === TextEditorConst.defaults.NODE_TYPE_TEXT) {
+				if (targetNode.nodeType === CONSTANTS.NODE_TYPE_TEXT) {
 					textNode = targetNode;
 
 				} else {
@@ -353,7 +355,7 @@ class EditorView {
 						targetNode = targetNode.firstChild;
 					}
 
-					if (targetNode.nodeType === TextEditorConst.defaults.NODE_TYPE_TEXT) {
+					if (targetNode.nodeType === CONSTANTS.NODE_TYPE_TEXT) {
 						textNode = targetNode;
 
 					} else {
@@ -474,45 +476,6 @@ class EditorView {
 		this._editorWrapEl.style.display = 'none';
 	}
 
-	// /**
-	//  * render
-	//  * @param {string} contents
-	//  * @param {object} textRect
-	//  * @param {object} attrInfo
-	//  * @param {object} marginInfo
-	//  * @private
-	//  */
-	// _render(contents, textRect, attrInfo, marginInfo) {
-	// 	if (this._editorEl) {
-	// 		//TODO innerHTML 코드 삭제
-	// 		this._editorEl.innerHTML = contents;
-	// 	}
-	//
-	// 	if (attrInfo) {
-	// 		this._attrInfo = attrInfo;
-	//
-	// 		if (attrInfo.hasOwnProperty('classList') && attrInfo.classList.length) {
-	// 			_applyClass(attrInfo.classList);
-	// 		}
-	//
-	// 		if (attrInfo.hasOwnProperty('style') && attrInfo.style) {
-	// 			_applyStyle(attrInfo.style);
-	// 		}
-	//
-	// 		if (attrInfo.hasOwnProperty('attr') && attrInfo.attr) {
-	// 			_applyAttr(attrInfo.attr);
-	// 		}
-	// 	}
-	//
-	// 	if (textRect) {
-	// 		_setTextRect(textRect);
-	// 	}
-	//
-	// 	if (marginInfo) {
-	// 		_setMargin(marginInfo);
-	// 	}
-	// }
-
 	/**
 	 * render
 	 * @param {object} body
@@ -523,7 +486,7 @@ class EditorView {
 			let ps = body.ps;
 			let bodyPr = body.bodyPr;
 
-			this._textRenderer.render(this._editorEl, ps, bodyPr);
+			this._textRenderer.render(this._editorWrapEl, ps, bodyPr);
 		}
 	}
 
