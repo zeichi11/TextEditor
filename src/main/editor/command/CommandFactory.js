@@ -10,7 +10,7 @@ import Align from './format/font/Align';
 import Anchor from './format/layout/Anchor';
 import Inset from './format/layout/Inset';
 
-const CommandExecutor = {
+const CommandFactory = {
 	/**
 	 * create command
 	 * @param {string} type
@@ -58,4 +58,4 @@ const CommandExecutor = {
 	}
 };
 
-export default CommandExecutor;
+export default CommandFactory;
