@@ -1,11 +1,28 @@
+.ui_container {
+    background-color: #fafafa;
+    border-top: 1px #e0e0e0 solid;
+    border-bottom: 1px #e0e0e0 solid;
+}
+
 .btn {
     position: relative;
     display: inline-block;
-    background-color: darkgrey;
-    border: 1px black solid;
-    width: 30px;
-    height: 30px;
+    background-color: #fafafa;
+    width: 2em;
+    height: 2em;
     cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #efefef;
+}
+
+.btn_icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .sep_line {
@@ -13,7 +30,23 @@
 }
 
 .combo {
+    position: relative;
+    display: inline-block;
+    background-color: #fafafa;
+    height: 2em;
+}
 
+.combo > .combo_input {
+    width: 4em;
+    height: 1em;
+}
+
+.combo > .combo_btn {
+    position: relative;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    content: '>';
 }
 
 .input {
@@ -21,7 +54,7 @@
 }
 
 .on {
-    background-color: lightgrey;
+    background-color: #efefef;
 }
 
 .bold {

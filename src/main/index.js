@@ -4,7 +4,7 @@ import Ui from './ui/Ui';
 (function () {
 	const WIDTH = 500;
 	const HEIGHT = 500;
-	const UI_HEIGHT = 50;
+	const UI_HEIGHT = 30;
 	let editor = document.createElement('DIV');
 	let uiContainer = document.createElement('DIV');
 	let container = document.createElement('DIV');

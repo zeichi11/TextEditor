@@ -3,15 +3,23 @@ import EditorAPI from '../editor/EditorAPI';
 import './Ui.css';
 
 let Ui = function () {
+	const UI_CONTAINER = 'ui_container';
 	const BTN_CLASS = 'btn';
+	const BTN_ICON_CLASS = 'btn_icon';
 	const SEP_LINE_CLASS = 'sep_line';
-	const COMBO_CLASS = 'combo';
-	const INPUT_CLASS = 'input';
 	const ON_CLASS = 'on';
+
+	const COMBO_CLASS = 'combo';
+	const COMBO_BTN_CLASS = 'combo_btn';
+	const COMBO_INPUT_CLASS = 'combo_input';
+
+	const INPUT_CLASS = 'input';
+
 	const BOLD = 'bold';
 	const ITALIC = 'italic';
 	const UNDERLINE = 'underline';
 	const STRIKE = 'strikethrough';
+	const FONT = 'font';
 
 	// const BTN_CLASS = UiStyle['btn'];
 	// const SEP_LINE_CLASS = UiStyle['sep_line'];
@@ -25,7 +33,7 @@ let Ui = function () {
 
 	/**
 	 * get state
-	 * @param {Element} targetEl
+	 * @param {EventTarget} targetEl
 	 * @returns {boolean}
 	 * @private
 	 */
@@ -76,28 +84,59 @@ let Ui = function () {
 	 * create button
 	 * @param {string} className
 	 * @param {object} style
+	 * @param {string} title
 	 * @param {string} text
 	 * @returns {Node}
 	 * @private
 	 */
-	function _createBtn(className, style, text) {
+	function _createBtn(className, style, title, text) {
 		let btnEl = document.createElement('DIV'),
+			btnIconEl = document.createElement('DIV'),
 			btnSpanEl = document.createElement('SPAN'),
 			btnText = document.createTextNode(text),
 			keys = Object.keys(style),
 			i;
 
+		btnEl.setAttribute('title', title);
 		btnEl.classList.add(BTN_CLASS);
 		btnEl.classList.add(className);
+		btnIconEl.classList.add(BTN_ICON_CLASS);
 
 		for (i = 0; i < keys.length; i++) {
 			btnSpanEl.style[keys[i]] = style[keys[i]];
 		}
 
 		btnSpanEl.appendChild(btnText);
-		btnEl.appendChild(btnSpanEl);
+		btnIconEl.appendChild(btnSpanEl);
+		btnEl.appendChild(btnIconEl);
 
 		return btnEl;
+	}
+
+	/**
+	 * create combobox
+	 * @param {string} className
+	 * @param {object} style
+	 * @param {string} title
+	 * @private
+	 */
+	function _createCombo(className, style, title) {
+		let comboEl = document.createElement('DIV'),
+			inputAnchorEl = document.createElement('A'),
+			btnAnchorEl = document.createElement('A'),
+			inputEl = document.createElement('INPUT');
+
+		comboEl.setAttribute('title', title);
+		comboEl.classList.add(COMBO_CLASS);
+
+		inputAnchorEl.classList.add(COMBO_INPUT_CLASS);
+		btnAnchorEl.classList.add(COMBO_BTN_CLASS);
+
+		inputAnchorEl.appendChild(inputEl);
+		comboEl.appendChild(inputAnchorEl);
+		comboEl.appendChild(btnAnchorEl);
+
+		return comboEl;
 	}
 
 	return {
@@ -105,18 +144,22 @@ let Ui = function () {
 		 * render
 		 */
 		render(uiContainerEl) {
-			let	boldBtnEl = _createBtn(BOLD, {fontWeight: 'bold'}, 'B'),
-				italicBtnEl = _createBtn(ITALIC, {fontStyle: 'italic'}, 'I'),
-				underlineBtnEl = _createBtn(UNDERLINE, {textDecoration: 'underline'}, 'U'),
-				strikeBtnEl = _createBtn(STRIKE, {textDecoration: 'line-through'}, 'S'),
+			let	boldBtnEl = _createBtn(BOLD, {fontWeight: 'bold'}, BOLD, 'B'),
+				italicBtnEl = _createBtn(ITALIC, {fontStyle: 'italic'}, ITALIC, 'I'),
+				underlineBtnEl = _createBtn(UNDERLINE, {textDecoration: 'underline'}, UNDERLINE, 'U'),
+				strikeBtnEl = _createBtn(STRIKE, {textDecoration: 'line-through'}, STRIKE, 'S'),
+				// fontComboEl = _createCombo(FONT, {}, ''),
 				sepLine = document.createElement('DIV');
 
 			sepLine.classList.add(SEP_LINE_CLASS);
 
-			[boldBtnEl, italicBtnEl, underlineBtnEl, strikeBtnEl].forEach(function (el) {
+
+			[/*fontComboEl, */boldBtnEl, italicBtnEl, underlineBtnEl, strikeBtnEl].forEach(function (el) {
 				_bindEvent(el);
 				uiContainerEl.appendChild(el);
 			});
+
+			uiContainerEl.classList.add(UI_CONTAINER);
 		}
 	};
 }();
