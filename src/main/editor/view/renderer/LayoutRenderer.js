@@ -1,18 +1,21 @@
-const LayoutRenderer = {
+import AbstractRenderer from "./AbstractRenderer";
+
+class LayoutRenderer extends AbstractRenderer {
 	/**
-	 * editor DOM 객체를 반환한다.
-	 * @returns {Element}
+	 * constructor
 	 */
-	getEditorLayout: function() {
-		return document.getElementsByClassName(TextEditorConst.name.editorWrap)[0];
-	},
+	constructor() {
+		super();
+	}
 
 	/**
 	 * styleInfo 내용을 적용한다.
-	 * @param {object} styleInfo
+	 * @param {string} type
+	 * @param {object} value
 	 */
-	applyFormat: function(styleInfo) {
-		var editor = this.getEditorLayout(),
+	applyFormat(type, value) {
+		let editor = this.getEditorLayout(),
+			styleInfo = this.generateHtmlStyle(type, value),
 			prop;
 
 		for (prop in styleInfo) {
@@ -21,6 +24,6 @@ const LayoutRenderer = {
 			}
 		}
 	}
-};
+}
 
 export default LayoutRenderer;

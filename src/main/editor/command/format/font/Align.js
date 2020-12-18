@@ -10,20 +10,12 @@ class Align extends AbstractFormat {
 	}
 
 	/**
-	 * Return style object.
-	 * @ovveride
-	 * @param {object} value
-	 * @returns {{textAlign: string}}
-	 */
-	getStyleInfo(value) { return {"textAlign": String(value)} };
-
-	/**
 	 * Execute command.
 	 * @override
 	 * @param {object} value
 	 */
 	execute(value) {
-		this.apply(CMD_TYPE.ALIGN, this.getStyleInfo(value));
+		this.apply(CMD_TYPE.ALIGN, value);
 	}
 }
 

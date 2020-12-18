@@ -1,5 +1,7 @@
 import {NAMES, DOC_EVENT, CONSTANTS, CMD_TYPE} from '../common/Constants';
 import TextRenderer from './renderer/TextRenderer';
+import FormatRenderer from './renderer/FormatRenderer';
+import LayoutRenderer from './renderer/LayoutRenderer';
 import Config from '../common/Config';
 import Utils from '../common/Utils';
 import EditorEventPublisher from '../EditorEventPublisher';
@@ -29,6 +31,8 @@ class EditorView {
 		}
 
 		this._textRenderer = new TextRenderer();
+		this._formatRenderer = new FormatRenderer();
+		this._layoutRenderer = new LayoutRenderer();
 
 		EditorEventPublisher.register(this);
 
@@ -530,6 +534,25 @@ class EditorView {
 				break;
 			case CMD_TYPE.SELECTION:
 				this._updateSelectionInfo(value);
+				break;
+
+			// font format command
+			case CMD_TYPE.ALIGN:
+			case CMD_TYPE.BOLD:
+			case CMD_TYPE.DOUBLE_UNDERLINE:
+			case CMD_TYPE.FONT_COLOR:
+			case CMD_TYPE.FONT_NAME:
+			case CMD_TYPE.FONT_SIZE:
+			case CMD_TYPE.ITALIC:
+			case CMD_TYPE.STRIKETHROUGH:
+			case CMD_TYPE.UNDERLINE:
+				this._formatRenderer.applyFormat(type, value);
+				break;
+
+			// layout format command
+			case CMD_TYPE.ANCHOR:
+			case CMD_TYPE.INSET:
+				this._layoutRenderer.applyFormat(type, value);
 				break;
 		}
 	}

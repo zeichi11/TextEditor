@@ -10,22 +10,12 @@ class StrikeThrough extends AbstractFormat {
 	}
 
 	/**
-	 * Return style object.
-	 * @ovveride
-	 * @param {boolean} value
-	 * @returns {{textDecoration: {type: string, value: *}}}
-	 */
-	getStyleInfo(value) {
-		return {"textDecoration": {"type": "line-through", "value": value}};
-	}
-
-	/**
 	 * Execute command.
 	 * @override
 	 * @param {object} value
 	 */
 	execute(value) {
-		this.apply(CMD_TYPE.STRIKETHROUGH, this.getStyleInfo(value));
+		this.apply(CMD_TYPE.STRIKETHROUGH, value);
 	}
 }
 

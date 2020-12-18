@@ -10,20 +10,12 @@ class Anchor extends AbstractFormat {
 	}
 
 	/**
-	 * Return style object.
-	 * @ovveride
-	 * @param {object} value
-	 * @returns {{verticalAlign: string}}
-	 */
-	getStyleInfo(value) { return {"verticalAlign": String(value)} };
-
-	/**
 	 * Execute command.
 	 * @override
 	 * @param {object} value
 	 */
 	execute(value) {
-		this.apply(CMD_TYPE.ANCHOR, this.getStyleInfo(value));
+		this.apply(CMD_TYPE.ANCHOR, value);
 	}
 }
 
