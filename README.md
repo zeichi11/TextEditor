@@ -5,7 +5,7 @@ contenteditable 기능을 기반으로 텍스트 입력, 서식 편집 등의 �
 텍스트 편집기의 연동을 위해 편집 동작을 수행시킬 수 있는 API 함수 및 편집기 내 event 전달을 위한 publisher도 함께 구현한다.<br/>
 
 ## 구조
-<img width="1117" alt="스크린샷 2020-12-19 오전 2 59 42" src="https://user-images.githubusercontent.com/18525366/102646039-bd39f200-41a6-11eb-86b5-d69cf313041a.png">
+<img width="1066" alt="스크린샷 2020-12-19 오전 3 02 55" src="https://user-images.githubusercontent.com/18525366/102646312-26ba0080-41a7-11eb-8331-7a25da45be56.png">
 
 ## 동작
 - 셀렉션 및 텍스트 입력 : contentEditable의 기본 입력 동작을 활용<br/>
