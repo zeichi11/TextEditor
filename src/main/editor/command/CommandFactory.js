@@ -9,6 +9,12 @@ import StrikeThrough from './format/font/Strike';
 import Align from './format/font/Align';
 import Anchor from './format/layout/Anchor';
 import Inset from './format/layout/Inset';
+import Content from './content/Content';
+import Text from './content/Text';
+import Delete from './content/Delete';
+import Reset from './content/Reset';
+import Selection from './content/Selection';
+import Tab from './content/Tab';
 
 const CommandFactory = {
 	/**
@@ -51,6 +57,25 @@ const CommandFactory = {
 				break;
 			case CMD_TYPE.INSET:
 				command = new Inset();
+				break;
+
+			case CMD_TYPE.CONTENT:
+				command = new Content();
+				break;
+			case CMD_TYPE.TEXT:
+				command = new Text();
+				break;
+			case CMD_TYPE.DELETE:
+				command = new Delete();
+				break;
+			case CMD_TYPE.RESET:
+				command = new Reset();
+				break;
+			case CMD_TYPE.SELECTION:
+				command = new Selection();
+				break;
+			case CMD_TYPE.TAB:
+				command = new Tab();
 				break;
 		}
 

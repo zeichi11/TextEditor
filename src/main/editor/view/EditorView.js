@@ -512,29 +512,36 @@ class EditorView {
 	/**
 	 * render Editor Event
 	 * @param {string} type
-	 * @param {object} value
+	 * @param {object} valueObj
 	 * @private
 	 */
-	notify(type, value) {
+	notify(type, valueObj) {
 		switch(type) {
 			case DOC_EVENT.OPEN:
-				this._render(value);
+				this._render(valueObj);
 				break;
 			case DOC_EVENT.RESIZE:
-				this._setEditorRect(value);
+				// this._setEditorRect(valueObj.value);
 				break;
 			case CMD_TYPE.RESET:
-				this._restructure(value);
+				this._restructure(valueObj.range);
 				break;
 			case CMD_TYPE.CONTENT:
-				this._renderContents(value.content, value.range);
+				this._renderContents(valueObj.value, valueObj.range);
 				break;
 			case CMD_TYPE.TEXT:
-				this._insertText(value.text, value.range);
+				this._insertText(valueObj.value, valueObj.range);
+				break;
+			case CMD_TYPE.DELETE:
+				// this._deleteContents(valueObj);
 				break;
 			case CMD_TYPE.SELECTION:
-				this._updateSelectionInfo(value);
+				this._updateSelectionInfo(valueObj.range);
 				break;
+			case CMD_TYPE.TAB:
+				// this._insertTab(valueObj);
+				break;
+
 
 			// font format command
 			case CMD_TYPE.ALIGN:
@@ -546,13 +553,13 @@ class EditorView {
 			case CMD_TYPE.ITALIC:
 			case CMD_TYPE.STRIKETHROUGH:
 			case CMD_TYPE.UNDERLINE:
-				this._formatRenderer.applyFormat(type, value);
+				this._formatRenderer.applyFormat(type, valueObj);
 				break;
 
 			// layout format command
 			case CMD_TYPE.ANCHOR:
 			case CMD_TYPE.INSET:
-				this._layoutRenderer.applyFormat(type, value);
+				this._layoutRenderer.applyFormat(type, valueObj);
 				break;
 		}
 	}

@@ -1,8 +1,10 @@
 const CMD_TYPE = {
 		RESET: 'reset',
 		CONTENT: 'content',
+		DELETE: 'delete',
 		TEXT: 'text',
 		SELECTION: 'selection',
+		TAB: 'tab',
 		BOLD: 'bold',
 		ITALIC: 'italic',
 		UNDERLINE: 'underline',

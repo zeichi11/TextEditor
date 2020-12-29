@@ -21,6 +21,7 @@ class CommandExecutor {
 		let command = this.createCommand(type);
 
 		if (command) {
+			console.log(`execute Command: ${type}`);
 			command.execute(value, range);
 		}
 	}
