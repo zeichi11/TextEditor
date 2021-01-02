@@ -41,8 +41,6 @@ let Ui = function () {
 		let classList = targetEl.classList;
 		if (classList.contains(BTN_CLASS)) {
 			return classList.contains(ON_CLASS);
-		} else {
-
 		}
 	}
 
@@ -52,12 +50,20 @@ let Ui = function () {
 	 * @private
 	 */
 	function _handleClick(event) {
-		let targetEl = event.target,
+		event.stopPropagation();
+
+		let targetEl = event.currentTarget,
 			classList = targetEl.classList,
 			state;
 
 		if (classList.contains(BTN_CLASS)) {
 			state = _getState(targetEl);
+
+			if (!state) {
+				classList.add(ON_CLASS);
+			} else {
+				classList.remove(ON_CLASS);
+			}
 
 			if (classList.contains(BOLD)) {
 				EditorAPI.setBold(!state);

@@ -20,6 +20,9 @@ class EditorView {
 		this._editorEl.classList.add(NAMES.editor);
 		this._editorEl.setAttribute('contenteditable', 'true');
 		this._editorEl.setAttribute('spellcheck', false);
+		this._editorEl.addEventListener('blur', function (event) {
+			event.target.focus();
+		});
 
 		this._editorWrapEl.appendChild(this._editorEl);
 
