@@ -2,7 +2,7 @@
 
 ## 프로젝트 컨셉
 contenteditable 기능을 기반으로 텍스트 입력, 서식 편집 등의 작업을 할 수 있는 텍스트 편집기를 구현한다.<br/>
-텍스트 편집기의 연동을 위해 편집 동작을 수행시킬 수 있는 API 함수 및 편집기 내 event 전달을 위한 publisher도 함께 구현한다.<br/>
+텍스트 편집기의 연동을 위해 편집 동작을 수행시킬 수 있는 API 함수 및 편집기 내에서 발생한 event 전달을 위한 publisher도 함께 구현한다.<br/>
 
 ## 구조
 <img width="1066" alt="스크린샷 2020-12-19 오전 3 02 55" src="https://user-images.githubusercontent.com/18525366/102646312-26ba0080-41a7-11eb-8331-7a25da45be56.png">
